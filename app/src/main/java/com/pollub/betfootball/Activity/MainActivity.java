@@ -96,6 +96,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
                 }else{
                     Toast.makeText(MainActivity.this, "Failed to login! Please check your credentials", Toast.LENGTH_LONG).show();
+                    progressBar.setVisibility(View.GONE);
                 }
             }
         });

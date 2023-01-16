@@ -13,6 +13,34 @@
         android:theme="@style/Theme.BetFootball"
         tools:targetApi="31">
         <activity
+            android:name=".Activity.TeamCreate"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activity.Teams"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activity.TeamActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Entity.Team"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".Activity.Profile"
             android:exported="false">
             <meta-data
@@ -21,6 +49,13 @@
         </activity>
         <activity
             android:name=".Activity.Settings"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Activity.UpcomingMatches"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -40,10 +75,6 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
-        <activity
-            android:name=".ui.login.LoginActivity"
-            android:exported="false"
-            android:label="@string/title_activity_login" />
         <activity
             android:name=".Activity.MainActivity"
             android:exported="true">

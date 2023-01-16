@@ -7,7 +7,7 @@
 
 
     <EditText
-        android:id="@+id/team_name"
+        android:id="@+id/teamNameEdit"
         android:layout_width="380dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="116dp"
@@ -79,7 +79,7 @@
         android:text="@string/create_team"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/team_name"
+        app:layout_constraintTop_toBottomOf="@+id/teamNameEdit"
         tools:ignore="TextContrastCheck" />
 
     <ImageView
@@ -93,5 +93,17 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/back" />
+
+    <TextView
+        android:id="@+id/temp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="174dp"
+        android:layout_marginTop="63dp"
+        android:layout_marginEnd="179dp"
+        android:text=""
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/createTeam" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

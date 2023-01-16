@@ -22,7 +22,7 @@ import com.pollub.betfootball.R;
 
 public class HomePage extends AppCompatActivity implements View.OnClickListener {
 
-    private Button settings, profile;
+    private Button settings, profile, matches, teams;
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
@@ -35,8 +35,14 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
         settings = (Button) findViewById(R.id.settings);
         settings.setOnClickListener(this);
 
+        matches = (Button) findViewById(R.id.matches);
+        matches.setOnClickListener(this);
+
         profile = (Button) findViewById(R.id.profile);
         profile.setOnClickListener(this);
+
+        teams = (Button) findViewById(R.id.teams);
+        teams.setOnClickListener(this);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
@@ -72,6 +78,12 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
                 break;
             case R.id.profile:
                 startActivity(new Intent(this, Profile.class));
+                break;
+            case R.id.matches:
+                startActivity(new Intent(this, UpcomingMatches.class));
+                break;
+            case R.id.teams:
+                startActivity(new Intent(this, Teams.class));
                 break;
         }
     }
