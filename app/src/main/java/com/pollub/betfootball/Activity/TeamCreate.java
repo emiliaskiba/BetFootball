@@ -9,6 +9,7 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ public class TeamCreate extends AppCompatActivity implements View.OnClickListene
     private DatabaseReference reference;
     private String userID, code;
     private Button createTeam;
+    private ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +43,9 @@ public class TeamCreate extends AppCompatActivity implements View.OnClickListene
 
         mAuth = FirebaseAuth.getInstance();
 
+        back = (ImageView) findViewById(R.id.back);
+        back.setOnClickListener(this);
+
         teamNameEdit = (EditText) findViewById(R.id.teamNameEdit);
         user = FirebaseAuth.getInstance().getCurrentUser();
         userID = user.getUid();
@@ -48,45 +53,47 @@ public class TeamCreate extends AppCompatActivity implements View.OnClickListene
         createTeam = (Button) findViewById(R.id.createTeam);
         createTeam.setOnClickListener(this);
     }
+
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.createTeam:
                 createTeam();
-                startActivity(new Intent(TeamCreate.this, Teams.class));
-
+                startActivity(new Intent(this, Teams.class));
+                break;
+            case R.id.back:
+                startActivity(new Intent(this, Teams.class));
                 break;
         }
     }
 
 
-        // function to generate a random string of length n
-        static String getAlphaNumericString(int n)
-        {
+    // function to generate a random string of length n
+    static String getAlphaNumericString(int n) {
 
-            // choose a Character random from this String
-            String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                    + "0123456789"
-                    + "abcdefghijklmnopqrstuvxyz";
+        // choose a Character random from this String
+        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                + "0123456789"
+                + "abcdefghijklmnopqrstuvxyz";
 
-            // create StringBuffer size of AlphaNumericString
-            StringBuilder sb = new StringBuilder(n);
+        // create StringBuffer size of AlphaNumericString
+        StringBuilder sb = new StringBuilder(n);
 
-            for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
 
-                // generate a random number between
-                // 0 to AlphaNumericString variable length
-                int index
-                        = (int)(AlphaNumericString.length()
-                        * Math.random());
+            // generate a random number between
+            // 0 to AlphaNumericString variable length
+            int index
+                    = (int) (AlphaNumericString.length()
+                    * Math.random());
 
-                // add Character one by one in end of sb
-                sb.append(AlphaNumericString
-                        .charAt(index));
-            }
-
-            return sb.toString();
+            // add Character one by one in end of sb
+            sb.append(AlphaNumericString
+                    .charAt(index));
         }
+
+        return sb.toString();
+    }
 
 
     private void createTeam() {

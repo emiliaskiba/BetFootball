@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -46,6 +47,7 @@ public class UpcomingMatches extends AppCompatActivity implements View.OnClickLi
     private EditText matchIDEdit, teamTwoScoreEdit, teamOneScoreEdit;
     private ProgressBar progressBar;
     private Button confirm;
+private ImageView back;
 
     private String userID, match;
     private FirebaseUser user;
@@ -57,6 +59,9 @@ public class UpcomingMatches extends AppCompatActivity implements View.OnClickLi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upcoming_matches);
 
+        back = (ImageView) findViewById(R.id.back);
+        back.setOnClickListener(this);
+
         mAuth = FirebaseAuth.getInstance();
 
         user = FirebaseAuth.getInstance().getCurrentUser();
@@ -65,9 +70,6 @@ public class UpcomingMatches extends AppCompatActivity implements View.OnClickLi
 
         referenceMatch = FirebaseDatabase.getInstance().getReference().child("Match");
         referenceBets = FirebaseDatabase.getInstance().getReference().child("Bets");
-
-
-        //temp
 
 
         final TextView temp = (TextView) findViewById(R.id.temp);
@@ -154,6 +156,9 @@ public class UpcomingMatches extends AppCompatActivity implements View.OnClickLi
         switch (v.getId()) {
             case R.id.confirm:
                 placeBet();
+                break;
+            case R.id.back:
+                startActivity(new Intent(this, HomePage.class));
                 break;
         }
     }

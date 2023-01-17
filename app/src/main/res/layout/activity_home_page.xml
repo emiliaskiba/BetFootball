@@ -59,17 +59,6 @@
         app:layout_constraintTop_toBottomOf="@+id/banner"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/quickBet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/quick_bet"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/settings"
-        app:layout_constraintVertical_bias="0.246" />
-
     <Button
         android:id="@+id/profile"
         android:layout_width="413dp"
@@ -124,17 +113,4 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/matches" />
 
-    <TextView
-        android:id="@+id/TEMP"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="TEAM ___ - ___ TEAM"
-        android:textSize="30sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/quickBet"
-        app:layout_constraintVertical_bias="0.114"
-        tools:ignore="HardcodedText" />
 </androidx.constraintlayout.widget.ConstraintLayout>

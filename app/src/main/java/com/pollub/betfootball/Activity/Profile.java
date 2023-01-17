@@ -3,7 +3,10 @@ package com.pollub.betfootball.Activity;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,20 +20,24 @@ import com.google.firebase.database.ValueEventListener;
 import com.pollub.betfootball.Entity.User;
 import com.pollub.betfootball.R;
 
-public class Profile extends AppCompatActivity {
+public class Profile extends AppCompatActivity implements View.OnClickListener {
 
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
+    private ImageView back;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)  {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();
+
+        back = (ImageView) findViewById(R.id.back);
+        back.setOnClickListener(this);
 
         final TextView nameTextView = (TextView) findViewById(R.id.name);
         final TextView fullNameTextView = (TextView) findViewById(R.id.fullName);
@@ -55,5 +62,14 @@ public class Profile extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.back:
+                startActivity(new Intent(this, HomePage.class));
+                break;
+        }
     }
 }

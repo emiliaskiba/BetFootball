@@ -10,12 +10,12 @@
         android:id="@+id/teamCode"
         android:layout_width="206dp"
         android:layout_height="48dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginBottom="20dp"
         android:inputType=""
+        app:layout_constraintBottom_toTopOf="@+id/joinTeam"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/createTeam"
         tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
@@ -77,57 +77,44 @@
         android:id="@+id/joinTeam"
         android:layout_width="207dp"
         android:layout_height="48dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginBottom="20dp"
         android:text="@string/join_team"
+        app:layout_constraintBottom_toTopOf="@+id/back"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/teamCode" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/createTeam"
         android:layout_width="207dp"
         android:layout_height="48dp"
-        android:layout_marginTop="220dp"
+        android:layout_marginBottom="20dp"
         android:text="@string/create_team"
+        app:layout_constraintBottom_toTopOf="@+id/teamCode"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button3" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="410dp"
-        android:layout_height="56dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="1dp"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="410dp"
-        android:layout_height="56dp"
-        android:layout_marginTop="44dp"
-        android:layout_marginEnd="1dp"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <ImageView
         android:id="@+id/back"
         android:layout_width="53dp"
         android:layout_height="48dp"
         android:layout_marginStart="179dp"
-        android:layout_marginTop="33dp"
         android:layout_marginEnd="179dp"
         android:layout_marginBottom="38dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/joinTeam"
         app:srcCompat="@drawable/back" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/teamList"
+        android:layout_width="355dp"
+        android:layout_height="294dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@+id/createTeam"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/hello" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
