@@ -32,10 +32,11 @@ public class Teams extends AppCompatActivity implements View.OnClickListener {
     private EditText teamCodeEdit;
     private FirebaseUser user;
     private DatabaseReference reference, referenceTeams, database, referenceTeamUsers;
-    private String userID;
+    private String userID, teamName;
     private String parentKey = null;
     private ImageView back;
     private String keys[];
+    private Boolean zmiennaPomocnicza = false;
 
    /* RecyclerView recyclerView;
     TeamAdapter teamAdapter;
@@ -64,10 +65,10 @@ public class Teams extends AppCompatActivity implements View.OnClickListener {
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         userID = user.getUid();
-        mbase1 = FirebaseDatabase.getInstance().getReference().child("TeamUsers").orderByChild("userID").equalTo(userID);
+        mbase = FirebaseDatabase.getInstance().getReference().child("TeamUsers").orderByChild("userID").equalTo(userID);
 
-        mbase = FirebaseDatabase.getInstance().getReference().child("UserTeams").orderByChild("code").equalTo("abcdef");
-        System.out.println("--------------"+ mbase);
+        //mbase = FirebaseDatabase.getInstance().getReference().child("UserTeams").orderByChild("code").equalTo("abcdef");
+        System.out.println("--------------" + mbase);
         recyclerView = findViewById(R.id.teamList);
         // To display the Recycler view linearly
 
@@ -100,7 +101,7 @@ public class Teams extends AppCompatActivity implements View.OnClickListener {
         });
         */
         // Connecting object of required Adapter class to
-        FirebaseRecyclerOptions<Team> options = new FirebaseRecyclerOptions.Builder<Team>().setQuery(mbase, Team.class).build();
+        FirebaseRecyclerOptions<TeamUsers> options = new FirebaseRecyclerOptions.Builder<TeamUsers>().setQuery(mbase, TeamUsers.class).build();
         // the Adapter class itself
 
         adapter = new TeamAdapter(options);
@@ -152,13 +153,45 @@ public class Teams extends AppCompatActivity implements View.OnClickListener {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     Team team = snapshot.getValue(Team.class);
                     if (Objects.equals(teamCode, team.code)) {
+
+
                         parentKey = snapshot.getKey();
+                        System.out.println("------------- zmiennej wartosc na zewnatrz " + parentKey);
                         user = FirebaseAuth.getInstance().getCurrentUser();
                         userID = user.getUid();
 
-                        TeamUsers teamUsers = new TeamUsers(userID, parentKey);
-                        reference.push().setValue(teamUsers);
-                        Toast.makeText(Teams.this, "Successfully joined team!", Toast.LENGTH_SHORT).show();
+                        mbase1 = FirebaseDatabase.getInstance().getReference().child("TeamUsers").orderByChild("teamID").equalTo(parentKey);
+                        //roboty
+
+                        mbase1.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                    TeamUsers teamUser = snapshot.getValue(TeamUsers.class);
+                                    userID = user.getUid();
+                                    if( userID == teamUser.userID) {
+                                        zmiennaPomocnicza = true;
+                                    }
+                                }
+                            }
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+                        });
+                        //koniec
+
+
+                        if (zmiennaPomocnicza == false) {
+                            teamName = team.name;
+
+
+                            TeamUsers teamUsers = new TeamUsers(userID, parentKey, teamName);
+                            reference.push().setValue(teamUsers);
+                            Toast.makeText(Teams.this, "Successfully joined team!", Toast.LENGTH_SHORT).show();
+                        }
+                        else{
+                            Toast.makeText(Teams.this, "You already joined this team!", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
                 if (parentKey == null) {
@@ -182,7 +215,6 @@ public class Teams extends AppCompatActivity implements View.OnClickListener {
 
 
     // Function to tell the app to stop getting
-
     // data from database on stopping of the activity
 
     @Override

@@ -32,5 +32,9 @@
     <string name="team_code">Team code</string>
     <string name="copy">Copy</string>
     <string name="logout">Logout</string>
+    <string name="admin">Admin</string>
+    <string name="admin_panel">Admin Panel</string>
+    <string name="add_match">Add match</string>
+    <string name="fill_match_info">Fill Match Info</string>
 
 </resources>

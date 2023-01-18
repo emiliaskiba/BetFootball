@@ -1,42 +1,29 @@
 package com.pollub.betfootball.Activity;
 
 
-import static java.lang.String.valueOf;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.pollub.betfootball.Entity.Bet;
-import com.pollub.betfootball.Entity.User;
 import com.pollub.betfootball.R;
 
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.Objects;
 
 public class UpcomingMatches extends AppCompatActivity implements View.OnClickListener {
@@ -137,12 +124,6 @@ private ImageView back;
         });
 
 
-        confirm = (Button) findViewById(R.id.confirm);
-        confirm.setOnClickListener(this);
-
-        matchIDEdit = (EditText) findViewById(R.id.matchID);
-        teamOneScoreEdit = (EditText) findViewById(R.id.teamOneScore);
-        teamTwoScoreEdit = (EditText) findViewById(R.id.teamTwoScore);
 
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
@@ -154,9 +135,9 @@ private ImageView back;
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.confirm:
+          /*  case R.id.confirm:
                 placeBet();
-                break;
+                break;*/
             case R.id.back:
                 startActivity(new Intent(this, HomePage.class));
                 break;

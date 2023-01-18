@@ -12,7 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
-import com.pollub.betfootball.Entity.Team;
+import com.pollub.betfootball.Entity.TeamUsers;
 import com.pollub.betfootball.R;
 
 
@@ -22,13 +22,13 @@ import com.pollub.betfootball.R;
 
 public class TeamAdapter extends FirebaseRecyclerAdapter<
 
-        Team, TeamAdapter.teamViewholder> {
+        TeamUsers, TeamAdapter.teamViewholder> {
 
 
 
     public TeamAdapter(
 
-            @NonNull FirebaseRecyclerOptions<Team> options)
+            @NonNull FirebaseRecyclerOptions<TeamUsers> options)
 
     {
 
@@ -48,7 +48,7 @@ public class TeamAdapter extends FirebaseRecyclerAdapter<
 
     protected void
 
-    onBindViewHolder(@NonNull teamViewholder holder, int position, @NonNull Team model) {
+    onBindViewHolder(@NonNull teamViewholder holder, int position, @NonNull TeamUsers model) {
 
 
         // Add firstname from model class (here
@@ -57,7 +57,7 @@ public class TeamAdapter extends FirebaseRecyclerAdapter<
 
         // view (here "person.xml")
 
-        holder.teamName.setText(model.getName());
+        holder.teamName.setText(model.getTeamName());
 
 
     }

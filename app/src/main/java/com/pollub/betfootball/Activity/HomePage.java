@@ -1,14 +1,14 @@
 package com.pollub.betfootball.Activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -22,7 +22,7 @@ import com.pollub.betfootball.R;
 
 public class HomePage extends AppCompatActivity implements View.OnClickListener {
 
-    private Button settings, profile, matches, teams;
+    private Button settings, profile, matches, teams, admin;
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
@@ -44,6 +44,9 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
         teams = (Button) findViewById(R.id.teams);
         teams.setOnClickListener(this);
 
+        admin = (Button) findViewById(R.id.admin);
+        admin.setOnClickListener(this);
+
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();
@@ -59,6 +62,10 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
                     String name = userProfile.fullName;
                     nameTextView.setText(name);
                 }
+                if (userProfile.type == 0)
+                {
+                    admin.setVisibility(View.VISIBLE);
+                }
             }
 
             @Override
@@ -66,6 +73,11 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
                 Toast.makeText(HomePage.this,"Something wrong happened!", Toast.LENGTH_LONG).show();
             }
         });
+
+
+
+
+
 
     }
 
@@ -84,6 +96,9 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
                 break;
             case R.id.teams:
                 startActivity(new Intent(this, Teams.class));
+                break;
+            case R.id.admin:
+                startActivity(new Intent(this, Admin.class));
                 break;
         }
     }
