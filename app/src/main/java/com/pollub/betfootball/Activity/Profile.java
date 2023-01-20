@@ -1,14 +1,16 @@
 package com.pollub.betfootball.Activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -26,9 +28,12 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
     private DatabaseReference reference;
     private String userID;
     private ImageView back;
+    private EditText editFullName;
+    private Button change;
+    private String newFullName;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState)  {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
@@ -43,11 +48,15 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         final TextView fullNameTextView = (TextView) findViewById(R.id.fullName);
         final TextView emailTextView = (TextView) findViewById(R.id.email);
 
+        change = findViewById(R.id.change);
+        change.setOnClickListener(this);
+
+
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
-                if (userProfile != null){
+                if (userProfile != null) {
                     String fullName = userProfile.fullName;
                     String email = userProfile.email;
                     fullNameTextView.setText(fullName);
@@ -58,7 +67,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(Profile.this,"Something wrong happened!", Toast.LENGTH_LONG).show();
+                Toast.makeText(Profile.this, "Something wrong happened!", Toast.LENGTH_LONG).show();
             }
         });
 
@@ -66,9 +75,28 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.back:
                 startActivity(new Intent(this, HomePage.class));
+                break;
+            case R.id.change:
+                editFullName = (EditText) findViewById(R.id.editFullName);
+                newFullName = editFullName.getText().toString().trim();
+
+                if(newFullName.length() < 2){
+                    editFullName.setError("Nickname too short! It should be longer than 2");
+                    editFullName.requestFocus();
+                    break;
+                }
+                if(newFullName.length() > 15){
+                    editFullName.setError("Nickname too long! It should be shorter than 15");
+                    editFullName.requestFocus();
+                    break;
+                }
+                User.updateFullName(userID, newFullName);
+                Toast.makeText(Profile.this, "Nickname changed!", Toast.LENGTH_LONG).show();
+                finish();
+                startActivity(getIntent());
                 break;
         }
     }

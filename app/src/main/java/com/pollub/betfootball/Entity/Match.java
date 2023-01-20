@@ -7,6 +7,7 @@ public class Match {
     public Integer teamOneScore;
     public Integer teamTwoScore;
     public Boolean happened;
+    public Integer whoWins;
 
     public Match(Integer matchday, Integer teamOneID, Integer teamTwoID) {
         this.matchday = matchday;
@@ -15,6 +16,7 @@ public class Match {
         this.teamOneScore = 0;
         this.teamTwoScore = 0;
         this.happened = false;
+        this.whoWins = 0;
     }
 
     public Match() {
@@ -66,5 +68,13 @@ public class Match {
 
     public void setHappened(Boolean happened) {
         this.happened = happened;
+    }
+
+    public Integer getWhoWins() {
+        return whoWins;
+    }
+
+    public void setWhoWins(Integer whoWins) {
+        this.whoWins = whoWins;
     }
 }

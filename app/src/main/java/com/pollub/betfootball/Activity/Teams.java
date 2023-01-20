@@ -160,7 +160,7 @@ public class Teams extends AppCompatActivity implements View.OnClickListener {
                         user = FirebaseAuth.getInstance().getCurrentUser();
                         userID = user.getUid();
 
-                        mbase1 = FirebaseDatabase.getInstance().getReference().child("TeamUsers").orderByChild("teamID").equalTo(parentKey);
+                        mbase1 = FirebaseDatabase.getInstance().getReference().child("TeamUsers");
                         //roboty
 
                         mbase1.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -169,8 +169,9 @@ public class Teams extends AppCompatActivity implements View.OnClickListener {
                                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                                     TeamUsers teamUser = snapshot.getValue(TeamUsers.class);
                                     userID = user.getUid();
-                                    if( userID == teamUser.userID) {
+                                    if( userID == teamUser.userID && teamUser.teamID == parentKey ) {
                                         zmiennaPomocnicza = true;
+                                        System.out.println("ZMIENNA POMOCNICZA W SRODKU: " + zmiennaPomocnicza);
                                     }
                                 }
                             }
@@ -180,10 +181,10 @@ public class Teams extends AppCompatActivity implements View.OnClickListener {
                         });
                         //koniec
 
+                        System.out.println("ZMIENNA POMOCNICZA NA ZEWNATRZ: " + zmiennaPomocnicza);
 
                         if (zmiennaPomocnicza == false) {
                             teamName = team.name;
-
 
                             TeamUsers teamUsers = new TeamUsers(userID, parentKey, teamName);
                             reference.push().setValue(teamUsers);

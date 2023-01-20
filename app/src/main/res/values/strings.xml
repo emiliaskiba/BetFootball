@@ -36,5 +36,10 @@
     <string name="admin_panel">Admin Panel</string>
     <string name="add_match">Add match</string>
     <string name="fill_match_info">Fill Match Info</string>
+    <string name="dash">-</string>
+    <string name="add_and_calculate">Add and calculate</string>
+    <string name="change_nickname">Change nickname</string>
+    <string name="new_nickname">New nickname</string>
+    <string name="score">SCORE</string>
 
 </resources>

@@ -1,11 +1,7 @@
 package com.pollub.betfootball.Activity;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,16 +9,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.pollub.betfootball.Entity.Bet;
 import com.pollub.betfootball.Entity.Team;
-import com.pollub.betfootball.Entity.User;
 import com.pollub.betfootball.R;
 
 public class TeamCreate extends AppCompatActivity implements View.OnClickListener {
@@ -100,7 +93,7 @@ public class TeamCreate extends AppCompatActivity implements View.OnClickListene
 
         String teamName = teamNameEdit.getText().toString().trim();
 
-        Team team = new Team("abcde", teamName, userID);
+        Team team = new Team(getAlphaNumericString(6), teamName, userID);
         reference.push().setValue(team);
         Toast.makeText(TeamCreate.this, "Team created", Toast.LENGTH_SHORT).show();
 

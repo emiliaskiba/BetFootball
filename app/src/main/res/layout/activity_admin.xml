@@ -6,25 +6,11 @@
     android:layout_height="match_parent"
     tools:context=".Activity.Admin">
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="130dp"
-        android:layout_marginEnd="20dp"
-        android:ems="10"
-        android:inputType="number"
-        android:minHeight="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/button5"
-        app:layout_constraintTop_toBottomOf="@+id/textView"
-        tools:ignore="SpeakableTextPresentCheck" />
-
     <TextView
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
         android:text="@string/admin_panel"
         android:textSize="48sp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -39,7 +25,7 @@
         android:text="@string/add_match"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button5" />
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
 
     <Button
         android:id="@+id/fillMatchInfo"
@@ -51,14 +37,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/addMatch" />
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="130dp"
-        android:text="Button"
+
+    <ImageView
+        android:id="@+id/back"
+        android:layout_width="53dp"
+        android:layout_height="48dp"
+        android:layout_marginBottom="38dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:srcCompat="@drawable/back" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

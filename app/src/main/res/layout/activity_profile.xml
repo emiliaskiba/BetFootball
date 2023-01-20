@@ -93,7 +93,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="84dp"
         android:layout_marginTop="64dp"
-        android:text="Your name: "
+        android:text="Your nickname: "
         android:textSize="20sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/logo"
@@ -125,5 +125,26 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/back" />
+
+    <EditText
+        android:id="@+id/editFullName"
+        android:layout_width="183dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="100dp"
+        android:ems="10"
+        android:hint="@string/new_nickname"
+        app:layout_constraintEnd_toStartOf="@+id/change"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/emailView" />
+
+    <Button
+        android:id="@+id/change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="100dp"
+        android:text="@string/change_nickname"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editFullName"
+        app:layout_constraintTop_toBottomOf="@+id/emailView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

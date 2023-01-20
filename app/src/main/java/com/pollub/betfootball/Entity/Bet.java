@@ -8,6 +8,7 @@ public class Bet {
     public Integer teamTwoScore;
     public Integer whoWins;
     public Integer score;
+    public Boolean calculated;
 
     public Bet(String userID, Integer matchID, Integer teamOneScore, Integer teamTwoScore) {
         this.userID = userID;
@@ -25,7 +26,8 @@ public class Bet {
             this.whoWins = 0;
         }
 
-        this.score = -1;
+        this.score = 0;
+        this.calculated = false;
     }
 
     public Bet() {

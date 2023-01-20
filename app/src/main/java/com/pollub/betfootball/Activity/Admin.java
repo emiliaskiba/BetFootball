@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -12,6 +13,7 @@ import com.pollub.betfootball.R;
 public class Admin extends AppCompatActivity implements View.OnClickListener {
 
     private Button addMatch, fillMatchInfo;
+    private ImageView back;
 
 
     @Override
@@ -21,9 +23,11 @@ public class Admin extends AppCompatActivity implements View.OnClickListener {
 
         addMatch = (Button) findViewById(R.id.addMatch);
         fillMatchInfo = (Button) findViewById(R.id.fillMatchInfo);
+        back = (ImageView) findViewById(R.id.back);
+
         addMatch.setOnClickListener(this);
         fillMatchInfo.setOnClickListener(this);
-
+        back.setOnClickListener(this);
 
     }
 
@@ -36,6 +40,9 @@ public class Admin extends AppCompatActivity implements View.OnClickListener {
                 break;
             case R.id.fillMatchInfo:
                 startActivity(new Intent(this, AdminFillInfo.class));
+                break;
+            case R.id.back:
+                startActivity(new Intent(this, HomePage.class));
                 break;
         }
     }
