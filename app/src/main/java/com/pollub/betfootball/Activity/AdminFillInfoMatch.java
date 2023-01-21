@@ -17,8 +17,11 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.pollub.betfootball.Entity.Bet;
 import com.pollub.betfootball.Entity.Match;
 import com.pollub.betfootball.R;
+
+import java.util.Objects;
 
 public class AdminFillInfoMatch extends AppCompatActivity implements View.OnClickListener {
 
@@ -26,7 +29,7 @@ public class AdminFillInfoMatch extends AppCompatActivity implements View.OnClic
     private ImageView back;
     private EditText teamOneScoreEdit, teamTwoScoreEdit;
     private Button addAndCalculate;
-    private DatabaseReference reference, referenceTeam1, referenceTeam2, referenceBets;
+    private DatabaseReference reference, referenceTeam1, referenceTeam2, referenceBets, referenceChosenMatch;
     private String value;
     private Integer teamOneScore;
     private Integer teamTwoScore;
@@ -116,19 +119,49 @@ public class AdminFillInfoMatch extends AppCompatActivity implements View.OnClic
                 teamOneScore = Integer.valueOf(teamOneScoreEdit.getText().toString());
                 teamTwoScore = Integer.valueOf(teamTwoScoreEdit.getText().toString());
                 update(value, teamOneScore, teamTwoScore);
+                calculate(value, teamOneScore, teamTwoScore);
                 break;
         }
     }
 
-    private void calculate(String matchID) {
+    private void calculate(String matchID, Integer teamOneScore, Integer teamTwoScore) {
+
+
+
         referenceBets = FirebaseDatabase.getInstance().getReference("Bets");
-        referenceBets.child(String.valueOf(matchID)).addListenerForSingleValueEvent(new ValueEventListener() {
+
+        referenceBets.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String team2 = String.valueOf(snapshot.getValue());
-                teamTwo.setText(team2);
-                String temp = matchView.getText().toString();
-                matchView.setText(temp + team2);
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+
+                    Integer whoWins = null;
+                    if (teamOneScore > teamTwoScore) {
+                        whoWins = 1;
+                    } else if (teamOneScore < teamTwoScore) {
+                        whoWins = 2;
+                    } else if (teamOneScore == teamTwoScore) {
+                        whoWins = 0;
+                    }
+
+                    Bet bet = snapshot.getValue(Bet.class);
+                    if (Objects.equals((bet.matchID), matchID)) {
+                        String temp = snapshot.getKey();
+                        Integer tempScore = 0;
+                        referenceBets.child(temp).child("calculated").setValue(true);
+
+                        if (bet.whoWins == whoWins) {
+                            tempScore = tempScore + 5;
+                        }
+                        if (bet.teamOneScore == teamOneScore) {
+                            tempScore = tempScore + 5;
+                        }
+                        if (bet.teamTwoScore == teamTwoScore) {
+                            tempScore = tempScore + 5;
+                        }
+                        referenceBets.child(temp).child("score").setValue(tempScore);
+                    }
+                }
             }
 
             @Override
@@ -138,7 +171,10 @@ public class AdminFillInfoMatch extends AppCompatActivity implements View.OnClic
             }
         });
 
+
     }
+
+
 
     private void update(String matchID, Integer teamOneScore, Integer teamTwoScore) {
 
@@ -180,7 +216,7 @@ public class AdminFillInfoMatch extends AppCompatActivity implements View.OnClic
         }
 
 
-       // calculate(matchID);
+
 
         Toast.makeText(AdminFillInfoMatch.this, "Match info inserted & score calculated", Toast.LENGTH_LONG).show();
         startActivity(new Intent(this, AdminFillInfo.class));

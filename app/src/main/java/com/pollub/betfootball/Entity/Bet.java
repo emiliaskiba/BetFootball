@@ -3,14 +3,14 @@ package com.pollub.betfootball.Entity;
 public class Bet {
 
     public String userID;
-    public Integer matchID;
+    public String matchID;
     public Integer teamOneScore;
     public Integer teamTwoScore;
     public Integer whoWins;
     public Integer score;
     public Boolean calculated;
 
-    public Bet(String userID, Integer matchID, Integer teamOneScore, Integer teamTwoScore) {
+    public Bet(String userID, String matchID, Integer teamOneScore, Integer teamTwoScore) {
         this.userID = userID;
         this.matchID = matchID;
         this.teamOneScore = teamOneScore;

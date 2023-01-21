@@ -9,7 +9,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -21,7 +20,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.pollub.betfootball.Entity.Bet;
 import com.pollub.betfootball.R;
 
 import java.util.Objects;
@@ -181,11 +179,11 @@ private ImageView back;
         }*/
         progressBar.setVisibility(View.VISIBLE);
 
-        Bet bet = new Bet(userID, matchID, teamOneScore, teamTwoScore);
+        //Bet bet = new Bet(userID, matchID, teamOneScore, teamTwoScore);
 
-        reference.push().setValue(bet);
-        Toast.makeText(UpcomingMatches.this, "Data Inserted", Toast.LENGTH_SHORT).show();
-        progressBar.setVisibility(View.GONE);
+       // reference.push().setValue(bet);
+      //  Toast.makeText(UpcomingMatches.this, "Data Inserted", Toast.LENGTH_SHORT).show();
+       // progressBar.setVisibility(View.GONE);
 
     }
 }
