@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -51,17 +50,13 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
         reference = FirebaseDatabase.getInstance().getReference("Users");
         userID = user.getUid();
 
-        final TextView nameTextView = (TextView) findViewById(R.id.name);
 
 
         reference.child(userID).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 User userProfile = snapshot.getValue(User.class);
-                if (userProfile != null){
-                    String name = userProfile.fullName;
-                    nameTextView.setText(name);
-                }
+
                 if (userProfile.type == 0)
                 {
                     admin.setVisibility(View.VISIBLE);

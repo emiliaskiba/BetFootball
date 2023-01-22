@@ -5,100 +5,78 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-
     <TextView
         android:id="@+id/banner"
         android:layout_width="135dp"
         android:layout_height="29dp"
-        android:layout_marginTop="24dp"
         android:fontFamily="sans-serif-black"
         android:text="@string/banner"
         android:textAlignment="center"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/logo"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
         tools:ignore="MissingConstraints" />
 
     <ImageView
         android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_width="33dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="10dp"
         android:contentDescription="@string/logo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.244"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/icon"
         tools:ignore="MissingConstraints" />
 
-    <TextView
-        android:id="@+id/hello"
-        android:layout_width="44dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="4dp"
-        android:gravity="end"
-        android:text="@string/hello"
-        app:layout_constraintStart_toEndOf="@+id/logo"
-        app:layout_constraintTop_toBottomOf="@+id/banner"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="79dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="72dp"
-        android:text=""
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/hello"
-        app:layout_constraintTop_toBottomOf="@+id/banner"
-        tools:ignore="MissingConstraints" />
-
 
     <TextView
         android:id="@+id/team_name"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="1dp"
         android:fontFamily="sans-serif-black"
+        android:shadowColor="@color/colorPrimary"
+        android:shadowDx="1"
+        android:shadowDy="1"
+        android:shadowRadius="5"
         android:text="@string/team_name"
         android:textAlignment="center"
-        android:textSize="60sp"
         android:textStyle="bold"
+        app:autoSizeTextType="uniform"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintTop_toBottomOf="@+id/banner"
         tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/teamCodeView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="28dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="1dp"
         android:height="48dp"
+        android:gravity="center_horizontal|center_vertical"
         android:text="@string/team_code"
         android:textSize="25sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/teamCode"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/team_name"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toBottomOf="@+id/team_name" />
 
     <TextView
         android:id="@+id/teamCode"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="30dp"
         android:height="48dp"
+        android:gravity="center_horizontal|center_vertical"
         android:text="CODE"
-        android:textSize="25sp"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/teamCodeCopy"
         app:layout_constraintHorizontal_bias="0.581"
         app:layout_constraintStart_toEndOf="@+id/teamCodeView"
@@ -106,15 +84,15 @@
 
     <Button
         android:id="@+id/teamCodeCopy"
-        android:layout_width="84dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginEnd="60dp"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal|center_vertical"
         android:text="@string/copy"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/team_name"
-        app:layout_constraintVertical_bias="0.016" />
+        app:layout_constraintStart_toEndOf="@+id/teamCode"
+        app:layout_constraintTop_toBottomOf="@+id/team_name" />
 
 
     <ImageView

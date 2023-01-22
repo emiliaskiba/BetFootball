@@ -2,6 +2,8 @@
 package com.pollub.betfootball.Activity;
 
 
+import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,6 +12,7 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.firebase.ui.auth.AuthUI;
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.pollub.betfootball.Entity.TeamUsers;
@@ -25,17 +28,13 @@ public class TeamAdapter extends FirebaseRecyclerAdapter<
         TeamUsers, TeamAdapter.teamViewholder> {
 
 
-
     public TeamAdapter(
 
-            @NonNull FirebaseRecyclerOptions<TeamUsers> options)
-
-    {
+            @NonNull FirebaseRecyclerOptions<TeamUsers> options) {
 
         super(options);
 
     }
-
 
 
     // Function to bind the view in Card view(here
@@ -58,9 +57,22 @@ public class TeamAdapter extends FirebaseRecyclerAdapter<
         // view (here "person.xml")
 
         holder.teamName.setText(model.getTeamName());
+        holder.teamName.setOnClickListener(new View.OnClickListener() {
 
+            @SuppressLint("RestrictedApi")
+            @Override
+            public void onClick(View v) {
+                Intent myIntent = new Intent(AuthUI.getApplicationContext(), TeamActivity.class);
+                myIntent.putExtra("key", model.getTeamID()); //Optional parameters
+                myIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                AuthUI.getApplicationContext().startActivity(myIntent);
+            }
+
+
+        });
 
     }
+
     @NonNull
 
     @Override
@@ -75,7 +87,6 @@ public class TeamAdapter extends FirebaseRecyclerAdapter<
 
         return new TeamAdapter.teamViewholder(view);
     }
-    
 
 
     // Sub Class to create references of the views in Crad
@@ -88,9 +99,7 @@ public class TeamAdapter extends FirebaseRecyclerAdapter<
 
         Button teamName;
 
-        public teamViewholder(@NonNull View itemView)
-
-        {
+        public teamViewholder(@NonNull View itemView) {
 
             super(itemView);
 

@@ -1,189 +1,75 @@
 package com.pollub.betfootball.Activity;
 
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.Query;
+import com.pollub.betfootball.Entity.Match;
 import com.pollub.betfootball.R;
 
-import java.util.Objects;
+public class UpcomingMatches extends AppCompatActivity {
 
-public class UpcomingMatches extends AppCompatActivity implements View.OnClickListener {
-
-
-    private DatabaseReference reference;
-    private FirebaseAuth mAuth;
-    private EditText matchIDEdit, teamTwoScoreEdit, teamOneScoreEdit;
-    private ProgressBar progressBar;
-    private Button confirm;
-private ImageView back;
-
-    private String userID, match;
-    private FirebaseUser user;
-    private DatabaseReference referenceUsers, referenceMatch, referenceBetsInside, referenceBets;
-
+    private RecyclerView recyclerView;
+    MatchAdapter adapter; // Create Object of the Adapter class
+    Query mbase, mbase1;
+    ImageView back;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upcoming_matches);
 
+
+        mbase = FirebaseDatabase.getInstance().getReference().child("Match").orderByChild("happened").equalTo(false);
+
+        recyclerView = findViewById(R.id.matchList);
+        // To display the Recycler view linearly
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+        FirebaseRecyclerOptions<Match> options = new FirebaseRecyclerOptions.Builder<Match>().setQuery(mbase, Match.class).build();
+        // the Adapter class itself
+
+        adapter = new MatchAdapter(options);
+
+        // Connecting Adapter class with the Recycler view*/
+
+        recyclerView.setAdapter(adapter);
+
         back = (ImageView) findViewById(R.id.back);
-        back.setOnClickListener(this);
-
-        mAuth = FirebaseAuth.getInstance();
-
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        referenceUsers = FirebaseDatabase.getInstance().getReference("Users");
-        userID = user.getUid();
-
-        referenceMatch = FirebaseDatabase.getInstance().getReference().child("Match");
-        referenceBets = FirebaseDatabase.getInstance().getReference().child("Bets");
-
-
-        final TextView temp = (TextView) findViewById(R.id.temp);
-
-
-        referenceMatch.addValueEventListener(new ValueEventListener() {
+        back.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                for (DataSnapshot child : dataSnapshot.getChildren()) {
-                    String key = child.getKey();
-                    String value = child.getValue().toString();
-
-                    referenceBets = FirebaseDatabase.getInstance().getReference().child("Bets");
-                    referenceBets.addValueEventListener(new ValueEventListener() {
-
-
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                            for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                String keyInside = child.getKey();
-                                String valueInside = child.getValue().toString();
-
-                                referenceBetsInside = FirebaseDatabase.getInstance().getReference().child("Bets").child(keyInside);
-                                referenceBetsInside.addValueEventListener(new ValueEventListener() {
-
-
-                                    @Override
-                                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-
-                                        for (DataSnapshot child : dataSnapshot.getChildren()) {
-                                            String keyInside = child.getKey();
-                                            String valueInside = child.getValue().toString();
-                                            if (Objects.equals(keyInside, "matchID")) {
-                                                String betID = keyInside;
-                                                temp.setText(match);
-
-
-                                            }
-                                        }
-                                    }
-
-                                    @Override
-                                    public void onCancelled(@NonNull DatabaseError error) {
-
-                                    }
-                                });
-                            }
-                        }
-
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
-
-                        }
-                    });
-                }
-            }
-
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-
+            public void onClick(View v) {
+                startActivity(new Intent(UpcomingMatches.this, HomePage.class));
             }
         });
 
 
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
-        reference = FirebaseDatabase.getInstance().getReference().child("Bets");
-        referenceMatch = FirebaseDatabase.getInstance().getReference().child("Match");
     }
-
 
     @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-          /*  case R.id.confirm:
-                placeBet();
-                break;*/
-            case R.id.back:
-                startActivity(new Intent(this, HomePage.class));
-                break;
-        }
+    protected void onStart() {
+        super.onStart();
+        adapter.startListening();
     }
 
-    private void placeBet() {
-        Integer matchID = Integer.valueOf(matchIDEdit.getText().toString().trim());
-        Integer teamOneScore = Integer.valueOf(teamOneScoreEdit.getText().toString().trim());
-        Integer teamTwoScore = Integer.valueOf(teamTwoScoreEdit.getText().toString().trim());
 
-        user = FirebaseAuth.getInstance().getCurrentUser();
-        referenceUsers = FirebaseDatabase.getInstance().getReference("Users");
-        userID = user.getUid();
+    // Function to tell the app to stop getting
+    // data from database on stopping of the activity
 
-        /*if(fullName.isEmpty()){
-            editTextFullName.setError("Name is required!");
-            editTextFullName.requestFocus();
-            return;
-        }
-
-        if(email.isEmpty()){
-            editTextEmail.setError("Email is required!");
-            editTextEmail.requestFocus();
-            return;
-        }
-        if(!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            editTextEmail.setError(("Please provide valid Email!"));
-            editTextEmail.requestFocus();
-            return;
-        }
-        if(password.isEmpty()){
-            editTextPassword.setError("Password is required");
-            editTextPassword.requestFocus();
-            return;
-        }
-        if(password.length() < 6){
-            editTextPassword.setError("Password length should be 6 characters or more");
-            editTextPassword.requestFocus();
-            return;
-        }*/
-        progressBar.setVisibility(View.VISIBLE);
-
-        //Bet bet = new Bet(userID, matchID, teamOneScore, teamTwoScore);
-
-       // reference.push().setValue(bet);
-      //  Toast.makeText(UpcomingMatches.this, "Data Inserted", Toast.LENGTH_SHORT).show();
-       // progressBar.setVisibility(View.GONE);
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        adapter.stopListening();
     }
+
 }

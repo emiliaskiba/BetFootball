@@ -44,7 +44,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
         back = (ImageView) findViewById(R.id.back);
         back.setOnClickListener(this);
 
-        final TextView nameTextView = (TextView) findViewById(R.id.name);
+       // final TextView nameTextView = (TextView) findViewById(R.id.name);
         final TextView fullNameTextView = (TextView) findViewById(R.id.fullName);
         final TextView emailTextView = (TextView) findViewById(R.id.email);
 
@@ -60,7 +60,7 @@ public class Profile extends AppCompatActivity implements View.OnClickListener {
                     String fullName = userProfile.fullName;
                     String email = userProfile.email;
                     fullNameTextView.setText(fullName);
-                    nameTextView.setText(fullName);
+                   // nameTextView.setText(fullName);
                     emailTextView.setText(email);
                 }
             }

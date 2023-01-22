@@ -2,6 +2,7 @@ package com.pollub.betfootball.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -16,6 +17,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.pollub.betfootball.Entity.Team;
+import com.pollub.betfootball.Entity.TeamUsers;
 import com.pollub.betfootball.R;
 
 public class TeamCreate extends AppCompatActivity implements View.OnClickListener {
@@ -24,8 +26,8 @@ public class TeamCreate extends AppCompatActivity implements View.OnClickListene
     private FirebaseAuth mAuth;
     private EditText teamNameEdit;
     private FirebaseUser user;
-    private DatabaseReference reference;
-    private String userID, code;
+    private DatabaseReference reference, referenceInsert;
+    private String userID, code, teamID;
     private Button createTeam;
     private ImageView back;
 
@@ -94,8 +96,38 @@ public class TeamCreate extends AppCompatActivity implements View.OnClickListene
         String teamName = teamNameEdit.getText().toString().trim();
 
         Team team = new Team(getAlphaNumericString(6), teamName, userID);
-        reference.push().setValue(team);
-        Toast.makeText(TeamCreate.this, "Team created", Toast.LENGTH_SHORT).show();
+       // reference.push().setValue(team);
+// read the index key
+        String teamID = reference.push().getKey();
+        reference.child(teamID).setValue(team);
+
+        /*referenceInsert = FirebaseDatabase.getInstance().getReference("UserTeams");
+        referenceInsert.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    Team team = snapshot.getValue(Team.class);
+                    if (Objects.equals(team.name, teamName ) && Objects.equals(team.leader, userID )) {
+                        teamID = dataSnapshot.getKey();
+                    }
+                }
+            }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(TeamCreate.this, "Can't load. Make sure your connection is stable", Toast.LENGTH_LONG).show();
+            }
+        });*/
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+        DatabaseReference referenceTeamUser = FirebaseDatabase.getInstance().getReference().child("TeamUsers");
+        TeamUsers teamusers = new TeamUsers(userID, teamID, teamName);
+        referenceTeamUser.push().setValue(teamusers);
+
+        Toast.makeText(TeamCreate.this, "Team " + teamName + " created", Toast.LENGTH_SHORT).show();
+            }
+        }, 500);
 
 
     }

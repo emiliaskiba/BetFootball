@@ -7,32 +7,52 @@
     tools:context=".Activity.AdminFillInfoMatch">
 
     <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="@string/admin_panel"
-        android:textSize="48sp"
+        android:id="@+id/placeBetView"
+        android:layout_width="344dp"
+        android:layout_height="55dp"
+        android:layout_marginTop="50dp"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/place_a_bet"
+        android:textAlignment="center"
+        android:textSize="40sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        tools:ignore="MissingConstraints" />
 
     <TextView
-        android:id="@+id/fillMatchInfoTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="@string/fill_match_info"
+        android:id="@+id/banner"
+        android:layout_width="135dp"
+        android:layout_height="29dp"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/banner"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView" />
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="33dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icon"
+        tools:ignore="MissingConstraints" />
 
     <TextView
         android:id="@+id/match"
         android:layout_width="350dp"
         android:layout_height="50dp"
         android:layout_marginStart="10dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="10dp"
         android:background="@color/colorPrimary"
         android:gravity="center_horizontal|center_vertical"
@@ -41,7 +61,7 @@
         app:autoSizeTextType="uniform"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fillMatchInfoTextView" />
+        app:layout_constraintTop_toBottomOf="@+id/placeBetView" />
 
     <ImageView
         android:id="@+id/back"
@@ -110,13 +130,24 @@
         app:layout_constraintTop_toBottomOf="@+id/teamOne" />
 
     <Button
-        android:id="@+id/addAndCalculate"
+        android:id="@+id/placebet"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="60dp"
-        android:text="@string/add_and_calculate"
+        android:text="@string/place_a_bet"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/teamTwoScoreEdit" />
+
+    <TextView
+        android:id="@+id/PLACED"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="gone"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -41,5 +41,8 @@
     <string name="change_nickname">Change nickname</string>
     <string name="new_nickname">New nickname</string>
     <string name="score">SCORE</string>
+    <string name="place_a_bet">PLACE A BET</string>
+    <string name="goals">GOALS</string>
+    <string name="placed">You already placed a bet on this match!</string>
 
 </resources>

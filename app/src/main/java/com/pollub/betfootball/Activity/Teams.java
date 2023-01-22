@@ -2,12 +2,14 @@ package com.pollub.betfootball.Activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -67,54 +69,20 @@ public class Teams extends AppCompatActivity implements View.OnClickListener {
         userID = user.getUid();
         mbase = FirebaseDatabase.getInstance().getReference().child("TeamUsers").orderByChild("userID").equalTo(userID);
 
-        //mbase = FirebaseDatabase.getInstance().getReference().child("UserTeams").orderByChild("code").equalTo("abcdef");
         System.out.println("--------------" + mbase);
         recyclerView = findViewById(R.id.teamList);
-        // To display the Recycler view linearly
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // It is a class provide by the FirebaseUI to make a
-        // query in the database to fetch appropriate data
-        //FirebaseRecyclerOptions<Team> options = new FirebaseRecyclerOptions.Builder<Team>().setQuery(mbase, Team.class).build();
-        /*referenceTeamUsers.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                user = FirebaseAuth.getInstance().getCurrentUser();
-                userID = user.getUid();
-                int i = 0;
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    TeamUsers teamUsers = snapshot.getValue(TeamUsers.class);
-
-                    if (Objects.equals(userID, teamUsers.userID)) {
-                        keys[i]=snapshot.getKey();
-                        i=i+1;
-                         }
-                }
-                mbase = FirebaseDatabase.getInstance().getReference().child(String.valueOf(keys));
-               System.out.println(keys);
-            }
-
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-        */
-        // Connecting object of required Adapter class to
         FirebaseRecyclerOptions<TeamUsers> options = new FirebaseRecyclerOptions.Builder<TeamUsers>().setQuery(mbase, TeamUsers.class).build();
-        // the Adapter class itself
 
         adapter = new TeamAdapter(options);
-
-        // Connecting Adapter class with the Recycler view*/
-
         recyclerView.setAdapter(adapter);
-
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference().child("TeamUsers");
-        referenceTeams = FirebaseDatabase.getInstance().getReference().child("UserTeams");
         userID = user.getUid();
+
 
     }
 
@@ -146,7 +114,7 @@ public class Teams extends AppCompatActivity implements View.OnClickListener {
             teamCodeEdit.requestFocus();
             return;
         }
-
+        referenceTeams = FirebaseDatabase.getInstance().getReference().child("UserTeams");
         referenceTeams.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -154,51 +122,19 @@ public class Teams extends AppCompatActivity implements View.OnClickListener {
                     Team team = snapshot.getValue(Team.class);
                     if (Objects.equals(teamCode, team.code)) {
 
-
+                        teamName = team.name;
                         parentKey = snapshot.getKey();
                         System.out.println("------------- zmiennej wartosc na zewnatrz " + parentKey);
                         user = FirebaseAuth.getInstance().getCurrentUser();
                         userID = user.getUid();
 
-                        mbase1 = FirebaseDatabase.getInstance().getReference().child("TeamUsers");
-                        //roboty
-
-                        mbase1.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                    TeamUsers teamUser = snapshot.getValue(TeamUsers.class);
-                                    userID = user.getUid();
-                                    if( userID == teamUser.userID && teamUser.teamID == parentKey ) {
-                                        zmiennaPomocnicza = true;
-                                        System.out.println("ZMIENNA POMOCNICZA W SRODKU: " + zmiennaPomocnicza);
-                                    }
-                                }
-                            }
-                            @Override
-                            public void onCancelled(DatabaseError databaseError) {
-                            }
-                        });
                         //koniec
 
-                        System.out.println("ZMIENNA POMOCNICZA NA ZEWNATRZ: " + zmiennaPomocnicza);
-
-                        if (zmiennaPomocnicza == false) {
-                            teamName = team.name;
-
-                            TeamUsers teamUsers = new TeamUsers(userID, parentKey, teamName);
-                            reference.push().setValue(teamUsers);
-                            Toast.makeText(Teams.this, "Successfully joined team!", Toast.LENGTH_SHORT).show();
-                        }
-                        else{
-                            Toast.makeText(Teams.this, "You already joined this team!", Toast.LENGTH_SHORT).show();
-                        }
                     }
                 }
-                if (parentKey == null) {
-                    Toast.makeText(Teams.this, "Team not found!", Toast.LENGTH_LONG).show();
-                }
+
             }
+
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
@@ -206,7 +142,59 @@ public class Teams extends AppCompatActivity implements View.OnClickListener {
         });
 
 
+
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+                                public void run() {
+                                    referenceTeamUsers = FirebaseDatabase.getInstance().getReference("TeamUsers");
+                                    referenceTeamUsers.addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                                                TeamUsers teamUser = snapshot.getValue(TeamUsers.class);
+                                                if (Objects.equals(parentKey, teamUser.teamID) && Objects.equals(userID, teamUser.userID)) {
+                                                    zmiennaPomocnicza = true;
+                                                }
+                                            }
+                                        }
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+                                            Toast.makeText(Teams.this, "Can't load. Make sure your connection is stable", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+                            }
+                , 1000);
+
+        Handler handler2 = new Handler();
+        handler2.postDelayed(new Runnable() {
+                                 public void run() {
+                                     if (parentKey == null) {
+                                         Toast.makeText(Teams.this, "Team not found!", Toast.LENGTH_LONG).show();
+                                     } else {
+                                         if (zmiennaPomocnicza == false) {
+
+                                             TeamUsers teamUsers = new TeamUsers(userID, parentKey, teamName);
+                                             reference.push().setValue(teamUsers);
+                                             Toast.makeText(Teams.this, "Successfully joined team!", Toast.LENGTH_SHORT).show();
+                                         } else {
+                                             Toast.makeText(Teams.this, "You already joined this team!", Toast.LENGTH_SHORT).show();
+                                             zmiennaPomocnicza = false;
+                                         }
+
+                                     }
+                                 }
+                             }
+
+                , 3000);
+
+
+
+
+
     }
+
+
 
     @Override
     protected void onStart() {

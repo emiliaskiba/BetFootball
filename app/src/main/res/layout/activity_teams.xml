@@ -6,6 +6,32 @@
     android:layout_height="match_parent">
 
 
+    <TextView
+        android:id="@+id/banner"
+        android:layout_width="135dp"
+        android:layout_height="29dp"
+        android:fontFamily="sans-serif-black"
+        android:text="@string/banner"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        tools:ignore="MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="33dp"
+        android:layout_height="31dp"
+        android:layout_marginTop="10dp"
+        android:contentDescription="@string/logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/icon"
+        tools:ignore="MissingConstraints" />
+
     <EditText
         android:id="@+id/teamCode"
         android:layout_width="206dp"
@@ -17,60 +43,6 @@
         app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="SpeakableTextPresentCheck" />
-
-    <TextView
-        android:id="@+id/banner"
-        android:layout_width="135dp"
-        android:layout_height="29dp"
-        android:layout_marginTop="24dp"
-        android:fontFamily="sans-serif-black"
-        android:text="@string/banner"
-        android:textAlignment="center"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/logo"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:ignore="MissingConstraints" />
-
-    <ImageView
-        android:id="@+id/logo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:contentDescription="@string/logo"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.244"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/icon"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/hello"
-        android:layout_width="44dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="4dp"
-        android:gravity="end"
-        android:text="@string/hello"
-        app:layout_constraintStart_toEndOf="@+id/logo"
-        app:layout_constraintTop_toBottomOf="@+id/banner"
-        tools:ignore="MissingConstraints" />
-
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="79dp"
-        android:layout_height="22dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="72dp"
-        android:text=""
-        android:textColor="@color/colorPrimary"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/hello"
-        app:layout_constraintTop_toBottomOf="@+id/banner"
-        tools:ignore="MissingConstraints" />
 
 
     <Button
@@ -108,13 +80,15 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/teamList"
-        android:layout_width="355dp"
-        android:layout_height="294dp"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
         android:layout_marginTop="20dp"
         android:layout_marginBottom="20dp"
+        android:scrollbarAlwaysDrawHorizontalTrack="true"
+        android:scrollbarSize="5dp"
         app:layout_constraintBottom_toTopOf="@+id/createTeam"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/hello" />
+        app:layout_constraintTop_toBottomOf="@+id/banner" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
