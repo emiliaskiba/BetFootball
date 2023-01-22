@@ -31,6 +31,30 @@
         app:srcCompat="@drawable/icon"
         tools:ignore="MissingConstraints" />
 
+    <TextView
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center_horizontal"
+        android:textSize="5sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/teamLeaderView" />
+
+    <TextView
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/colorPrimary"
+        android:gravity="center_horizontal"
+        android:textSize="5sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/team_name" />
 
     <TextView
         android:id="@+id/team_name"
@@ -40,11 +64,6 @@
         android:layout_marginTop="40dp"
         android:layout_marginEnd="1dp"
         android:fontFamily="sans-serif-black"
-        android:shadowColor="@color/colorPrimary"
-        android:shadowDx="1"
-        android:shadowDy="1"
-        android:shadowRadius="5"
-        android:text="@string/team_name"
         android:textAlignment="center"
         android:textStyle="bold"
         app:autoSizeTextType="uniform"
@@ -57,42 +76,67 @@
         android:id="@+id/teamCodeView"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="1dp"
         android:height="48dp"
         android:gravity="center_horizontal|center_vertical"
         android:text="@string/team_code"
-        android:textSize="25sp"
+        android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/teamCode"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/team_name" />
+        app:layout_constraintTop_toBottomOf="@+id/line2" />
+
+    <TextView
+        android:id="@+id/teamLeaderView"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:height="48dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:text="@string/team_leader"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toStartOf="@+id/leader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/teamCodeView" />
 
     <TextView
         android:id="@+id/teamCode"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:height="48dp"
         android:gravity="center_horizontal|center_vertical"
-        android:text="CODE"
         android:textColor="@color/colorPrimary"
         android:textSize="20sp"
         app:layout_constraintEnd_toStartOf="@+id/teamCodeCopy"
         app:layout_constraintHorizontal_bias="0.581"
         app:layout_constraintStart_toEndOf="@+id/teamCodeView"
-        app:layout_constraintTop_toBottomOf="@+id/team_name" />
+        app:layout_constraintTop_toBottomOf="@+id/line2" />
+
+    <TextView
+        android:id="@+id/leader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:height="50dp"
+        android:gravity="center_horizontal|center_vertical"
+        android:textColor="@color/colorPrimary"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/teamLeaderView"
+        app:layout_constraintTop_toBottomOf="@+id/teamCodeView" />
 
     <Button
         android:id="@+id/teamCodeCopy"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:gravity="center_horizontal|center_vertical"
         android:text="@string/copy"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/teamCode"
-        app:layout_constraintTop_toBottomOf="@+id/team_name" />
+        app:layout_constraintTop_toBottomOf="@+id/line2" />
 
 
     <ImageView
@@ -106,5 +150,52 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/back" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/teamUsersList"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/back"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scoreMatchdayView" />
+
+    <TextView
+        android:id="@+id/memberView"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="MEMBER"
+        app:layout_constraintEnd_toStartOf="@+id/scoreMatchdayView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/line1" />
+
+    <TextView
+        android:id="@+id/scoreMatchdayView"
+        android:layout_width="85dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:text="MATCHDAY SCORE"
+        app:layout_constraintEnd_toStartOf="@+id/scoreAllSeasonView"
+        app:layout_constraintStart_toEndOf="@+id/memberView"
+        app:layout_constraintTop_toBottomOf="@+id/line1" />
+
+    <TextView
+        android:id="@+id/scoreAllSeasonView"
+        android:layout_width="77dp"
+        android:layout_height="40dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="40dp"
+        android:gravity="center"
+        android:text="SEASON SCORE"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/scoreMatchdayView"
+        app:layout_constraintTop_toBottomOf="@+id/line1" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

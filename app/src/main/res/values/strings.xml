@@ -44,5 +44,8 @@
     <string name="place_a_bet">PLACE A BET</string>
     <string name="goals">GOALS</string>
     <string name="placed">You already placed a bet on this match!</string>
+    <string name="team_leader">Team Leader:</string>
+    <string name="leader">LEADER</string>
+    <string name="nickname">Nickname</string>
 
 </resources>
