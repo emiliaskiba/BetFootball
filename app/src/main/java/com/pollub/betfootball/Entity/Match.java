@@ -8,6 +8,7 @@ public class Match {
     public Integer teamTwoScore;
     public Boolean happened;
     public Integer whoWins;
+    public Boolean betBlocked;
 
     public Match(Integer matchday, Integer teamOneID, Integer teamTwoID) {
         this.matchday = matchday;
@@ -17,6 +18,7 @@ public class Match {
         this.teamTwoScore = 0;
         this.happened = false;
         this.whoWins = 0;
+        this.betBlocked = false;
     }
 
     public Match() {

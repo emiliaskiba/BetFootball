@@ -69,7 +69,7 @@ public class Teams extends AppCompatActivity implements View.OnClickListener {
         userID = user.getUid();
         mbase = FirebaseDatabase.getInstance().getReference().child("TeamUsers").orderByChild("userID").equalTo(userID);
 
-        System.out.println("--------------" + mbase);
+
         recyclerView = findViewById(R.id.teamList);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

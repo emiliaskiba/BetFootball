@@ -44,5 +44,15 @@
     <string name="place_a_bet">PLACE A BET</string>
     <string name="goals">GOALS</string>
     <string name="placed">You already placed a bet on this match!</string>
+    <string name="team_leader">Team Leader:</string>
+    <string name="leader">LEADER</string>
+    <string name="nickname">Nickname</string>
+    <string name="your_results_activity">Your Results</string>
+    <string name="match">MATCH</string>
+    <string name="block_betting">BLOCK BETTING</string>
+    <string name="actual_matchday">ACTUAL MATCHDAY</string>
+    <string name="change">CHANGE</string>
+    <string name="matchdaydot">MATCHDAY :</string>
+    <string name="matchday">MATCHDAY</string>
 
 </resources>

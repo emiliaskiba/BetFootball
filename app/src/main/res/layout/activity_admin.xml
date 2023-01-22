@@ -48,4 +48,26 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/back" />
 
+    <EditText
+        android:id="@+id/editTextNumber"
+        android:layout_width="175dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="100dp"
+        android:ems="10"
+        android:hint="@string/actual_matchday"
+        android:inputType="number"
+        app:layout_constraintEnd_toStartOf="@+id/changeMatchday"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/fillMatchInfo" />
+
+    <Button
+        android:id="@+id/changeMatchday"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="100dp"
+        android:text="@string/change"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTextNumber"
+        app:layout_constraintTop_toBottomOf="@+id/fillMatchInfo" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

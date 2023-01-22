@@ -32,7 +32,7 @@ public class PlaceBet extends AppCompatActivity implements View.OnClickListener 
     private ImageView back;
     private EditText teamOneScoreEdit, teamTwoScoreEdit;
     private Button placebet;
-    private DatabaseReference reference, referenceTeam1, referenceTeam2, referenceBets;
+    private DatabaseReference reference, referenceAvailability, referenceTeam1, referenceTeam2, referenceBets;
     private String value;
     private Integer teamOneScore;
     private Integer teamTwoScore;
@@ -69,6 +69,33 @@ public class PlaceBet extends AppCompatActivity implements View.OnClickListener 
                     }
                 }
             }
+
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(PlaceBet.this, "Can't load. Make sure your connection is stable", Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        referenceAvailability = FirebaseDatabase.getInstance().getReference("Match").child(value);
+        referenceAvailability.addListenerForSingleValueEvent(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    Match match = dataSnapshot.getValue(Match.class);
+                    if (Objects.equals(match.betBlocked, true) ) {
+                        teamOne.setVisibility(View.GONE);
+                        teamTwo.setVisibility(View.GONE);
+                        teamOneScoreEdit.setVisibility(View.GONE);
+                        teamTwoScoreEdit.setVisibility(View.GONE);
+                        placebet.setVisibility(View.GONE);
+
+                        placed.setText("Match started, you can't place a bet anymore! ");
+                        placed.setVisibility(View.VISIBLE);
+                    }
+                }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {

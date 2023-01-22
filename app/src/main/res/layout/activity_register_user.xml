@@ -50,7 +50,7 @@
         android:layout_marginTop="44dp"
         android:autofillHints="Name"
         android:ems="10"
-        android:hint="@string/name"
+        android:hint="@string/nickname"
         android:inputType="text"
         android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
