@@ -21,7 +21,7 @@ import com.pollub.betfootball.R;
 
 public class HomePage extends AppCompatActivity implements View.OnClickListener {
 
-    private Button settings, profile, matches, teams, admin;
+    private Button settings, profile, matches, teams, admin, results;
     private FirebaseUser user;
     private DatabaseReference reference;
     private String userID;
@@ -45,6 +45,9 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
 
         admin = (Button) findViewById(R.id.admin);
         admin.setOnClickListener(this);
+
+        results = (Button) findViewById(R.id.results);
+        results.setOnClickListener(this);
 
         user = FirebaseAuth.getInstance().getCurrentUser();
         reference = FirebaseDatabase.getInstance().getReference("Users");
@@ -94,6 +97,9 @@ public class HomePage extends AppCompatActivity implements View.OnClickListener 
                 break;
             case R.id.admin:
                 startActivity(new Intent(this, Admin.class));
+                break;
+            case R.id.results:
+                startActivity(new Intent(this, Results.class));
                 break;
         }
     }
