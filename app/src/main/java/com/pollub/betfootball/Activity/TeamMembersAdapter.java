@@ -70,10 +70,9 @@ public class TeamMembersAdapter extends FirebaseRecyclerAdapter<
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
 
                     if (Objects.equals(snapshot.getKey(), model.userID)) {
-                        //System.out.println("!!!!!key" + snapshot.getKey());
-                       // System.out.println("!!!!!modeluser" + model.userID);
+
                         User user = snapshot.getValue(User.class);
-                       // System.out.println("!!!!!userfullname" + user.fullName);
+
                         holder.teamMemberName.setText(user.fullName);
                         holder.scoreMatchday.setText(String.valueOf(user.scoreMatchDay));
                         holder.scoreAllSeason.setText(String.valueOf(user.scoreAllSeason));

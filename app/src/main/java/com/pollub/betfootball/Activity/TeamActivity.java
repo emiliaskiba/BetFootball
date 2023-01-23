@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,13 +34,18 @@ import java.util.Objects;
 
 public class TeamActivity extends AppCompatActivity implements View.OnClickListener {
     private ImageView back;
-    private String value;
-    private TextView team_name, team_code, leader;
+    private String value, matchdayLeaderUser, seasonLeaderUser;
+    private Integer matchdayLeaderUserScore = 0, seasonLeaderUserScore = 0;
+    private TextView team_name, team_code, leader, matchdayLeader, seasonLeader;
     private DatabaseReference database, referenceLeader;
     private String teamName, teamCode, leaderID, userLeaderID, leaderName;
     private ClipboardManager myClipboard;
     private ClipData myClip;
-    private Button teamCodeCopy;
+    private Button teamCodeCopy, setPrizeButton;
+    private Spinner spinner1;
+    private static final String[] paths = {"Czekolada","Piwo", "100PLN"};
+    private String prizeChosen;
+    private TextView prize;
 
     private RecyclerView recyclerView;
     TeamMembersAdapter adapter; // Create Object of the Adapter class
@@ -53,7 +61,46 @@ public class TeamActivity extends AppCompatActivity implements View.OnClickListe
         team_name = findViewById(R.id.team_name);
         team_code = findViewById(R.id.teamCode);
         leader = findViewById(R.id.leader);
+        matchdayLeader = findViewById(R.id.matchdayLeader);
+        seasonLeader = findViewById(R.id.seasonLeader);
         teamCodeCopy = findViewById(R.id.teamCodeCopy);
+        prize = findViewById(R.id.prize);
+        setPrizeButton = findViewById(R.id.button2);
+        setPrizeButton.setOnClickListener(this);
+
+        //spinner
+
+        spinner1 = (Spinner)findViewById(R.id.spinner1);
+
+        ArrayAdapter<String> adapterPrize = new ArrayAdapter<String>(TeamActivity.this, android.R.layout.simple_spinner_item,paths);
+        adapterPrize.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinner1.setAdapter(adapterPrize);
+        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                switch (item) {
+
+                    case "Czekolada":
+                        prizeChosen = "Czekolada";
+                        break;
+                    case "Piwo":
+                        prizeChosen = "Piwo";
+                        break;
+                    case "100PLN":
+                        prizeChosen = "100PLN";
+                        break;
+                }
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+                prizeChosen = "Czekolada";
+            }
+        });
+
+        //spinner end
+
 
         database = FirebaseDatabase.getInstance().getReference().child("UserTeams").child(value);
         database.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -64,6 +111,7 @@ public class TeamActivity extends AppCompatActivity implements View.OnClickListe
                 teamName = team.getName();
                 teamCode = team.getCode();
                 leaderID = team.getLeader();
+                prize.setText(team.prize);
 
             }
 
@@ -103,7 +151,6 @@ public class TeamActivity extends AppCompatActivity implements View.OnClickListe
                             userLeaderID = snapshot.getKey();
                              if (Objects.equals(leaderID, userLeaderID)) {
                                 leaderName = user.fullName;
-
                             }
 
                         }
@@ -119,7 +166,7 @@ public class TeamActivity extends AppCompatActivity implements View.OnClickListe
                 handler2.postDelayed(new Runnable() {
                     public void run() {
 
-                        System.out.println(leaderName);leader.setText(leaderName);
+                        leader.setText(leaderName);
                     }
                 }, 500);
             }
@@ -145,6 +192,63 @@ public class TeamActivity extends AppCompatActivity implements View.OnClickListe
 
         recyclerView.setAdapter(adapter);
 
+        Query referencematchdayleader = FirebaseDatabase.getInstance().getReference().child("TeamUsers").orderByChild("teamID").equalTo(value);
+
+
+        referencematchdayleader.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    TeamUsers teamUser = snapshot.getValue(TeamUsers.class);
+                    String tempID = teamUser.userID;
+
+
+                    DatabaseReference referencematchdayleader1 = FirebaseDatabase.getInstance().getReference("Users");
+                    referencematchdayleader1.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot udataSnapshot) {
+                            for (DataSnapshot usnapshot : udataSnapshot.getChildren()) {
+                                User user1 = usnapshot.getValue(User.class);
+
+                                if (Objects.equals(String.valueOf(usnapshot.getKey()), String.valueOf(tempID))) {
+
+                                    Integer tempMatchdayScore = user1.scoreMatchDay;
+                                    Integer tempSeasonScore = user1.scoreAllSeason;
+
+                                    if (Integer.valueOf(matchdayLeaderUserScore) < Integer.valueOf(tempMatchdayScore)) {
+
+                                        matchdayLeaderUserScore = tempMatchdayScore;
+                                        matchdayLeaderUser = user1.fullName;
+                                        matchdayLeader.setText(matchdayLeaderUser);
+
+                                    }
+                                    if (Integer.valueOf(seasonLeaderUserScore) < Integer.valueOf(tempSeasonScore)) {
+                                        seasonLeaderUserScore = tempSeasonScore;
+                                        seasonLeaderUser = user1.fullName;
+                                        seasonLeader.setText(seasonLeaderUser);
+                                    }
+
+                                }
+                            }
+
+                        }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+
+                        });
+                            }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+
+        });
+
+
+
     }
 
 
@@ -153,6 +257,9 @@ public class TeamActivity extends AppCompatActivity implements View.OnClickListe
         switch (v.getId()) {
             case R.id.back:
                 startActivity(new Intent(this, Teams.class));
+                break;
+            case R.id.button2:
+                setPrizeChosen();
                 break;
         }
     }
@@ -171,5 +278,12 @@ public class TeamActivity extends AppCompatActivity implements View.OnClickListe
     protected void onStop() {
         super.onStop();
         adapter.stopListening();
+    }
+
+    private void setPrizeChosen(){
+        DatabaseReference reference;
+        reference = FirebaseDatabase.getInstance().getReference().child("UserTeams");
+        reference.child(value).child("prize").setValue(prizeChosen);
+        prize.setText(prizeChosen);
     }
 }

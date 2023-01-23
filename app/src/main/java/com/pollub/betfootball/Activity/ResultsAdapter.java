@@ -84,13 +84,45 @@ public class ResultsAdapter extends FirebaseRecyclerAdapter<
 
                                     }
 
+                                }
+                            }
 
-                                    if (Objects.equals(Integer.valueOf(match.teamTwoID), Integer.valueOf(isnapshot.getKey()))) {
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+                            }
+                        });
+
+                    }
+
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
+
+        reference = FirebaseDatabase.getInstance().getReference().child("Match");
+        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    String parentKey = snapshot.getKey();
+                    Match match = snapshot.getValue(Match.class);
+                    if(Objects.equals(parentKey,model.matchID )){
+
+                        DatabaseReference reference;
+                        reference = FirebaseDatabase.getInstance().getReference().child("Teams");
+                        reference.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot idataSnapshot) {
+                                for (DataSnapshot isnapshot : idataSnapshot.getChildren()) {
+                                    String abc = (String) isnapshot.getValue();
+
+                                    if (Integer.valueOf(isnapshot.getKey()).equals(Integer.valueOf(match.teamTwoID))) {
+
                                         String temp = String.valueOf(holder.matchButton.getText());
                                         holder.matchButton.setText(temp + abc);
-
                                     }
-
 
                                 }
                             }
@@ -99,51 +131,18 @@ public class ResultsAdapter extends FirebaseRecyclerAdapter<
                             public void onCancelled(DatabaseError databaseError) {
                             }
                         });
+
                     }
 
-
-
-                    // System.out.println("!!!!!userfullname" + user.fullName);
-                    //holder.match.setText(user.fullName);
-                   // holder.score.setText(String.valueOf(user.scoreMatchDay));
-
                 }
             }
             @Override
             public void onCancelled(DatabaseError databaseError) {
             }
         });
+
 
         holder.score.setText(String.valueOf(model.score));
-
-
-
-
-/*
-
-        DatabaseReference reference;
-        reference = FirebaseDatabase.getInstance().getReference().child("Bets");
-        reference.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-
-                    //if (//Objects.equals(snapshot.getKey())) {
-                   // {
-                        //System.out.println("!!!!!key" + snapshot.getKey());
-                        // System.out.println("!!!!!modeluser" + model.userID);
-                        User user = snapshot.getValue(User.class);
-                        // System.out.println("!!!!!userfullname" + user.fullName);
-                        holder.match.setText(user.fullName);
-                        holder.score.setText(String.valueOf(user.scoreMatchDay));
-                   // }
-                }
-            }
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-            }
-        });
-*/
 
 
 

@@ -54,5 +54,9 @@
     <string name="change">CHANGE</string>
     <string name="matchdaydot">MATCHDAY :</string>
     <string name="matchday">MATCHDAY</string>
+    <string name="team_owner">Team Owner:</string>
+    <string name="matchday_leader">Matchday Leader:</string>
+    <string name="season_leader">Season Leader:</string>
+    <string name="season_prize">Season Prize:</string>
 
 </resources>

@@ -16,10 +16,10 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.pollub.betfootball.Entity.Bet;
 import com.pollub.betfootball.Entity.Match;
-import com.pollub.betfootball.Entity.User;
 import com.pollub.betfootball.R;
 
 import java.util.Objects;
@@ -34,7 +34,7 @@ public class AdminFillInfoMatch extends AppCompatActivity implements View.OnClic
     private String value, userID;
     private Integer teamOneScore;
     private Integer teamTwoScore;
-    private Integer tempScore, tempScoreMatchday, tempScoreAllSeason;
+    private Integer tempScore;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -135,6 +135,7 @@ public class AdminFillInfoMatch extends AppCompatActivity implements View.OnClic
     private void calculate(String matchID, Integer teamOneScore, Integer teamTwoScore) {
 
 
+        referenceUser = FirebaseDatabase.getInstance().getReference("Users");
         referenceBets = FirebaseDatabase.getInstance().getReference("Bets");
 
         referenceBets.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -152,10 +153,11 @@ public class AdminFillInfoMatch extends AppCompatActivity implements View.OnClic
                     }
 
                     Bet bet = snapshot.getValue(Bet.class);
+                    userID = bet.userID;
 
-                    System.out.println("USERID W ŚRODKU: --------" + userID);
                     if (Objects.equals((bet.matchID), matchID)) {
                         String temp = snapshot.getKey();
+
                         tempScore = 0;
                         referenceBets.child(temp).child("calculated").setValue(true);
 
@@ -168,50 +170,12 @@ public class AdminFillInfoMatch extends AppCompatActivity implements View.OnClic
                         if (bet.teamTwoScore == teamTwoScore) {
                             tempScore = tempScore + 5;
                         }
+
                         referenceBets.child(temp).child("score").setValue(tempScore);
+                        referenceUser.child(bet.userID).child("scoreMatchDay").setValue(ServerValue.increment(tempScore));
+                        referenceUser.child(bet.userID).child("scoreAllSeason").setValue(ServerValue.increment(tempScore));
 
-                      //  Handler handler = new Handler();
-                      //  handler.postDelayed(new Runnable() {
-                       //     public void run() {
-                                System.out.println("Po poczekanku: --------" + userID);
-                        referenceUser = FirebaseDatabase.getInstance().getReference().child("Users");
 
-                        referenceUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(DataSnapshot dataSnapshot) {
-                                System.out.println("W datachange: --------" + userID);
-                                userID = bet.userID;
-                                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-
-                                    String tempUserID = snapshot.getKey();
-                                    System.out.println("Przed porównaniem: --------" + userID);
-                                    System.out.println("tempUserID: --------" + tempUserID);
-                                    if (Objects.equals(userID, tempUserID)) {
-                                        User user = snapshot.getValue(User.class);
-                                        tempScoreMatchday = user.getScoreMatchDay();
-                                        System.out.println("tempScore: --------" + tempScore);
-                                        System.out.println("tempScoreMatchday: --------" + tempScoreMatchday);
-                                        tempScoreMatchday = tempScoreMatchday + tempScore;
-                                        System.out.println("tempScoreMatchday po dodaniu: --------" + tempScoreMatchday);
-                                        tempScoreAllSeason = user.getScoreAllSeason();
-                                        System.out.println("tempScoreMatchday: --------" + tempScoreAllSeason);
-                                        tempScoreAllSeason = tempScoreAllSeason + tempScore;
-                                        System.out.println("tempScoreMatchday po dodaniu: --------" + tempScoreAllSeason);
-                                        referenceUser.child(userID).child("scoreMatchDay").setValue(tempScoreMatchday);
-                                        referenceUser.child(userID).child("scoreAllSeason").setValue(tempScoreAllSeason);
-                                    }
-                                }
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
-                                Toast.makeText(AdminFillInfoMatch.this, "Can't load. Make sure your connection is stable", Toast.LENGTH_LONG).show();
-
-                            }
-                        });
-
-                          //  }
-                       // }, 1000);
                     }
                 }
             }
@@ -271,7 +235,7 @@ public class AdminFillInfoMatch extends AppCompatActivity implements View.OnClic
 
     }
 
-    private void block(String matchID){
+    private void block(String matchID) {
         DatabaseReference reference;
         reference = FirebaseDatabase.getInstance().getReference().child("Match");
         reference.child(matchID).child("betBlocked").setValue(true);

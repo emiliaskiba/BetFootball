@@ -6,6 +6,25 @@
     android:layout_height="match_parent">
 
     <TextView
+        android:id="@+id/seasonLeaderView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/season_leader"
+        app:layout_constraintEnd_toStartOf="@+id/seasonLeader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/matchdayLeaderView" />
+
+    <TextView
+        android:id="@+id/seasonLeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/seasonLeaderView"
+        app:layout_constraintTop_toBottomOf="@+id/matchdayLeader" />
+
+    <TextView
         android:id="@+id/banner"
         android:layout_width="135dp"
         android:layout_height="29dp"
@@ -41,7 +60,7 @@
         android:textSize="5sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/teamLeaderView" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner1" />
 
     <TextView
         android:id="@+id/line2"
@@ -93,8 +112,8 @@
         android:layout_marginTop="10dp"
         android:height="48dp"
         android:gravity="center_horizontal|center_vertical"
-        android:text="@string/team_leader"
-        android:textSize="20sp"
+        android:text="@string/team_owner"
+        android:textSize="14sp"
         app:layout_constraintEnd_toStartOf="@+id/leader"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/teamCodeView" />
@@ -121,7 +140,7 @@
         android:height="50dp"
         android:gravity="center_horizontal|center_vertical"
         android:textColor="@color/colorPrimary"
-        android:textSize="20sp"
+        android:textSize="14sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/teamLeaderView"
         app:layout_constraintTop_toBottomOf="@+id/teamCodeView" />
@@ -197,5 +216,73 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/scoreMatchdayView"
         app:layout_constraintTop_toBottomOf="@+id/line1" />
+
+    <TextView
+        android:id="@+id/matchdayLeaderView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:text="@string/matchday_leader"
+        app:layout_constraintEnd_toStartOf="@+id/matchdayLeader"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/teamLeaderView" />
+
+    <TextView
+        android:id="@+id/matchdayLeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/matchdayLeaderView"
+        app:layout_constraintTop_toBottomOf="@+id/leader" />
+
+    <TextView
+        android:id="@+id/prizeView"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="@string/season_prize"
+        app:layout_constraintEnd_toStartOf="@+id/prize"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seasonLeaderView" />
+
+    <Spinner
+        android:id="@+id/spinner1"
+        android:layout_width="150dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+
+        android:background="@android:drawable/btn_dropdown"
+        android:gravity="center"
+        android:spinnerMode="dropdown"
+        app:layout_constraintEnd_toStartOf="@+id/button2"
+        app:layout_constraintStart_toEndOf="@+id/prize"
+        app:layout_constraintTop_toBottomOf="@+id/seasonLeaderView"
+        tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
+    <TextView
+        android:id="@+id/prize"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="TextView"
+        app:layout_constraintEnd_toStartOf="@+id/spinner1"
+        app:layout_constraintStart_toEndOf="@+id/prizeView"
+        app:layout_constraintTop_toBottomOf="@+id/seasonLeaderView" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center"
+        android:text="SET"
+        android:textSize="8sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/spinner1"
+        app:layout_constraintTop_toBottomOf="@+id/seasonLeaderView"
+        tools:ignore="TouchTargetSizeCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

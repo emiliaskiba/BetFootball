@@ -124,7 +124,7 @@ public class Teams extends AppCompatActivity implements View.OnClickListener {
 
                         teamName = team.name;
                         parentKey = snapshot.getKey();
-                        System.out.println("------------- zmiennej wartosc na zewnatrz " + parentKey);
+
                         user = FirebaseAuth.getInstance().getCurrentUser();
                         userID = user.getUid();
 
