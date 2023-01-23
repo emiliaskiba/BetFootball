@@ -43,7 +43,7 @@ public class TeamActivity extends AppCompatActivity implements View.OnClickListe
     private ClipData myClip;
     private Button teamCodeCopy, setPrizeButton;
     private Spinner spinner1;
-    private static final String[] paths = {"Czekolada","Piwo", "100PLN"};
+    private static final String[] paths = {"Chocolate","Beer", "£50"};
     private String prizeChosen;
     private TextView prize;
 
@@ -81,21 +81,21 @@ public class TeamActivity extends AppCompatActivity implements View.OnClickListe
                 String item = parent.getItemAtPosition(position).toString();
                 switch (item) {
 
-                    case "Czekolada":
-                        prizeChosen = "Czekolada";
+                    case "Chocolate":
+                        prizeChosen = "Chocolate";
                         break;
-                    case "Piwo":
-                        prizeChosen = "Piwo";
+                    case "Beer":
+                        prizeChosen = "Beer";
                         break;
-                    case "100PLN":
-                        prizeChosen = "100PLN";
+                    case "£50":
+                        prizeChosen = "£50";
                         break;
                 }
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-                prizeChosen = "Czekolada";
+                prizeChosen = "Chocolate";
             }
         });
 
